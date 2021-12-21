@@ -18,6 +18,7 @@ import {
   Icon,
   Address,
 } from "./restaurant-info-card.styles";
+import { Favourite } from "../../../components/favourites/favourite.component";
 
 export function RestautantInfoCard({ restaurants = {} }) {
   const {
@@ -26,23 +27,32 @@ export function RestautantInfoCard({ restaurants = {} }) {
     photos = [
       "https://media-cdn.tripadvisor.com/media/photo-s/0f/4f/d0/28/restuarant-sonne.jpg",
     ],
-    address = "ioisosfas ewewa",
+    address,
     isOpenNow = true,
-    rating = 3,
+    rating = 1,
     isClosedTemporarily = true,
+    placeId,
   } = restaurants;
 
   const ratingArray = Array.from(new Array(Math.round(rating)));
 
   return (
     <RestaurantCard elevation={5}>
-      <RestaurantCardCover style={styles.cover} source={{ uri: photos[0] }} />
+      <View>
+        <Favourite restaurant={restaurants} />
+        <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
+      </View>
       <Info>
         <Text variant="label">{name}</Text>
         <Section>
           <Rating>
             {ratingArray.map((i, index) => (
-              <SvgXml key={index} xml={star} width={25} height={25} />
+              <SvgXml
+                key={`star-${placeId}-${index}`}
+                xml={star}
+                width={25}
+                height={25}
+              />
             ))}
           </Rating>
 
